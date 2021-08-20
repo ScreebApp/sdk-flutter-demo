@@ -10,7 +10,7 @@ Flutter demo app for Screeb
 
 ## Intro
 
-This project is a starting point for a all developers that wich to integrate native Android Screeb sdk
+This project is a starting point for a all developers that wish to integrate native Android Screeb sdk
 in a Flutter project.
 
 ## SDK installation
@@ -28,7 +28,7 @@ At this point, the SDK is installed and configured and can be used without any m
 But you'll probably need to communicate with it and send tracking information, declaring user's properties
 or set user's identity.
 
-To access these commands of the `Screeb.kt` class, we need to configure a `MethodChannel` to configure 
+To access these commands of the `Screeb.kt` class, we need to create a `MethodChannel` to configure 
 the interface between flutter code and Android specific functions.
 
 In `MainActivity.kt` a MethodChannel with name "screeb/commands" is configured to call Screeb functions
