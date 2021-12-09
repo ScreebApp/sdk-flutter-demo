@@ -10,15 +10,18 @@ Flutter demo app for Screeb
 
 ## Intro
 
-This project is a starting point for a all developers that wish to integrate native Android Screeb sdk
-in a Flutter project.
+This project is a starting point for a all developers that wish to integrate native Android & iOS
+Screeb sdk in a Flutter project.
 
 ## SDK installation
 
-First you need to add the Screeb sdk dependency in the Android build.gradle of the app, you'll find 
+For Android you need to add the Screeb sdk dependency in the Android build.gradle of the app, you'll find 
 [the instructions](https://github.com/ScreebApp/DemoAppAndroid) on the repo of the Android demo app. 
 
-## SDK usage
+For iOS you need to add the Screeb sdk dependency in the Podfile of the app, you'll find
+[the instructions](https://github.com/ScreebApp/sdk-ios-public) on the repo of the iOs sdk.
+
+## SDK configuration for Android
 
 Like in the Android demo app, the access point of the SDK must be created in a custom Application class,
 see `DemoApplication.kt`. You should create a Screeb instance using the builder and reference it in a
@@ -50,6 +53,40 @@ when (call.method) {
 }
 ```
 
+## SDK configuration for iOS
+
+The initialization point of the SDK must be created in the AppDelegate class,
+see `AppDelegate.swift` in the `Runner` module. You should call the method Screeb.init(...) with a valid channelId
+in parameter.
+
+At this point, the SDK is installed and configured and can be used without any more operation.
+But you'll probably need to communicate with it and send tracking information, declaring user's properties
+or set user's identity.
+
+To access these commands of the `Screeb.swift` class, we need to create a `MethodChannel` to configure
+the interface between flutter code and iOS specific functions.
+
+In `AppDelegate.swift` a MethodChannel with name "screeb/commands" is configured to call Screeb functions
+`setIdentity()`, `trackEvent()`, `trackScreen()` and `setVisitorProperties()`.
+
+```swift
+            switch call.method {
+                case "setIdentity":
+                    guard let args = call.arguments else { return }
+                    if let myArgs = args as? [String: Any], let userId = myArgs["userId"] as? String {
+                        Screeb.setIdentity(uniqueVisitorId: userId)
+                        result(true)
+                    } else {
+                        result(FlutterError(code: "-1",
+                                            message: "iOS could not extract flutter arguments in method: \(call.method)",
+                                            details: nil))
+                    }
+                    // (...) 
+            }
+```
+
+## SDK usage in Flutter project
+
 Then, to call these functions, you'll find in `main.dart` some examples using `platform.invokeMethod()` :
 
 ```dart
@@ -63,7 +100,7 @@ Then, to call these functions, you'll find in `main.dart` some examples using `p
 
 ## Remove warnings
 
-To remove warning from the SDK, just set a theme that inherits from `Theme.AppCompat`. In this project,
+To remove warning from the Android SDK, just set a theme that inherits from `Theme.AppCompat`. In this project,
 the theme `Theme.AppCompat.Light.NoActionBar` is used and should have no impact on the flutter UI styling.
 
 ## Troubleshooting
