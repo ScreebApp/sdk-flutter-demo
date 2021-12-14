@@ -9,6 +9,8 @@ ___
 
 Flutter demo app for Screeb
 
+![ios screenshot](flutter-ios.png)
+
 ## Intro
 
 This project is a starting point for a all developers who wish to integrate native Android & iOS
