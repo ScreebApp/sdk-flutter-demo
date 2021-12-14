@@ -11,7 +11,7 @@ Flutter demo app for Screeb
 
 ## Intro
 
-This project is a starting point for a all developers that wish to integrate native Android & iOS
+This project is a starting point for a all developers who wish to integrate native Android & iOS
 Screeb sdk in a Flutter project.
 
 ## SDK installation
